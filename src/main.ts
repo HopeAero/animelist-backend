@@ -2,12 +2,15 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { json } from 'express';
 
 async function bootstrap() {
   const PORT = process.env.PORT || 3000; 
   const app = await NestFactory.create(AppModule, { // Creación de la app
     cors: true,  // Cors
   });
+
+  app.use(json({ limit: '500mb' })); // Tamaño máximo de los datos (60mb)
 
   app.enableVersioning({  // Versionamiento
     defaultVersion: '1',
