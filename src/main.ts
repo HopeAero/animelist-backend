@@ -12,10 +12,15 @@ async function bootstrap() {
 
   app.use(json({ limit: '500mb' })); // Tamaño máximo de los datos (60mb)
 
-  app.enableVersioning({  // Versionamiento
-    defaultVersion: '1',
-    type: VersioningType.URI,
-  });
+  app.setGlobalPrefix("api/v1");
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    })
+  );
 
   const config = new DocumentBuilder() // Documentación
     .addBearerAuth()
@@ -25,9 +30,9 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config); // Documentación
-  SwaggerModule.setup('documentation', app, document); // Documentación
+  SwaggerModule.setup('api', app, document); // Documentación
 
-  app.useGlobalPipes(new ValidationPipe()); // Validación de datos
+  // Validación de datos
   await app.listen(PORT);
 }
 bootstrap();
