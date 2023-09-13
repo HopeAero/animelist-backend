@@ -1,5 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty, MinLength } from "class-validator";
+import { IsEmail, IsEnum, IsNotEmpty, MinLength} from "class-validator";
+import { UserRole } from "../entities/user.entity";
+import { isUniqueDb } from "@youba/nestjs-dbvalidator";
+
 
 export class CreateUserDto {
     @ApiProperty()
@@ -7,14 +10,18 @@ export class CreateUserDto {
     name: string;
 
     @ApiProperty()
+    @IsNotEmpty()
+    @isUniqueDb({table : 'user', column: 'email', message: 'Email already exists'})
     @IsEmail()
     email: string;
 
     @ApiProperty()
+    @IsNotEmpty()
     @MinLength(6)
     password: string;
 
     @ApiProperty()
     @IsNotEmpty()
-    role: string;
+    @IsEnum(UserRole, { message: 'Invalid role' })
+    role: UserRole;
 }
