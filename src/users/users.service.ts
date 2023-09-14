@@ -27,14 +27,29 @@ export class UsersService {
   }
 
   async findOne(id: number) {
-    return `This action returns a #${id} user`;
+    try{
+      const user = await this.userRepository.findOneBy({id});
+      return user;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    try {
+      return await this.userRepository.update({id}, updateUserDto);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async remove(id: number) {
-    return `This action removes a #${id} user`;
+    try {
+      const user = await this.userRepository.softDelete({id});
+      // const user = await this.userRepository.softRemove({id});
+      return user;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
