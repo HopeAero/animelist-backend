@@ -27,6 +27,7 @@ async function bootstrap() {
     .setTitle('AnimeList API')
     .setDescription('Esta es la api de AnimeList')
     .addTag('users')
+    .addTag('anime')
     .build();
 
   const document = SwaggerModule.createDocument(app, config); // Documentación
