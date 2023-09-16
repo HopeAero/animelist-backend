@@ -1,6 +1,7 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable, UnauthorizedException, UseGuards, applyDecorators } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
+
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -20,7 +21,7 @@ export class AuthGuard implements CanActivate {
         }
       );
       
-      request['user'] = payload;
+      request.user = payload;
     } catch {
       throw new UnauthorizedException('Invalid token');
     }
@@ -32,4 +33,3 @@ export class AuthGuard implements CanActivate {
       return type === 'Bearer' ? token : undefined;
     }
 }
-

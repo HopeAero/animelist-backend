@@ -20,12 +20,17 @@ export class AuthService {
             throw new BadRequestException('User already exists');
         }
 
-        return await this.usersService.create({
+        await this.usersService.create({
             email,
             password: await bcryptjs.hash(password, 10),
             name,
             role: UserRole.USER,
         });
+
+        return {
+            email,
+            name
+        }
     }
 
     async login({ email, password }: LoginDto) {
@@ -36,6 +41,7 @@ export class AuthService {
         }
 
         const isPasswordValid = await bcryptjs.compare(password, user.password);
+
         if (!isPasswordValid) {
             throw new UnauthorizedException('password is wrong');
         }
@@ -46,7 +52,17 @@ export class AuthService {
 
         return {
             token,
-            email
+            email,
         }
     }
+
+    async profile ({email , role} : {email: string, role: string}) {
+        const user = await this.usersService.findOneByEmail(email);
+        if (!user) {
+            throw new UnauthorizedException('email is wrong');
+        }
+
+        return user;
+    }
+    
 }

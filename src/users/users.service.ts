@@ -21,7 +21,7 @@ export class UsersService {
       console.log(error);
     }
   }
-
+  
   async findOneByEmail(email: string) {
     return await this.userRepository.findOneBy({ email });
   }
