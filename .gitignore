@@ -2,6 +2,10 @@
 /dist
 /node_modules
 /mysql
+.env
+.env.development
+.env.production
+.env.development.local
 
 # Logs
 logs

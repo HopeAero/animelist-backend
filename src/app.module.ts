@@ -4,10 +4,11 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AnimeModule } from './anime/anime.module';
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    UsersModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -18,7 +19,12 @@ import { AnimeModule } from './anime/anime.module';
       autoLoadEntities : true,
       synchronize: true,
     }),
-    AnimeModule
+    AnimeModule,
+    UsersModule,
+    AuthModule,
+    ConfigModule.forRoot({
+      envFilePath: '.env.development' || '.env.production' || '.env.development.local',
+    })
   ],
   controllers: [AppController],
   providers: [AppService],

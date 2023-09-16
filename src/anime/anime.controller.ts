@@ -2,8 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { AnimeService } from './anime.service';
 import { CreateAnimeDto } from './dto/create-anime.dto';
 import { UpdateAnimeDto } from './dto/update-anime.dto';
-import { ApiTags } from '@nestjs/swagger';
-
+import {ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+@ApiBearerAuth()
 @ApiTags('anime')
 @Controller('anime')
 export class AnimeController {

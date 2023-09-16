@@ -3,6 +3,7 @@ import { CreateUserDto } from './create-user.dto';
 import { UserRole } from '../entities/user.entity';
 import { IsEmail, IsEnum, IsNotEmpty, IsOptional, MinLength } from 'class-validator';
 import { isUniqueDb } from '@youba/nestjs-dbvalidator';
+import { Transform } from 'class-transformer';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
     @ApiProperty()
@@ -21,6 +22,7 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
     @IsNotEmpty()
     @MinLength(6)
     @IsOptional()
+    @Transform(({ value }) => value.trim())
     password: string;
 
     @ApiProperty()
