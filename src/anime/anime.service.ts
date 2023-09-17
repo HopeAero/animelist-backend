@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateAnimeDto } from './dto/create-anime.dto';
 import { UpdateAnimeDto } from './dto/update-anime.dto';
 import { Anime } from './entities/anime.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
 
 @Injectable()
 export class AnimeService {
@@ -13,12 +14,21 @@ export class AnimeService {
     private readonly animeRepository: Repository<Anime>
   ) {}
 
-  async create(createAnimeDto: CreateAnimeDto) {
+  async create(createAnimeDto: CreateAnimeDto, file: Express.Multer.File) {
     try {
-      const anime = await this.animeRepository.create(createAnimeDto)
+
+      if (!file) {
+        throw new BadRequestException('Not file found')
+      }
+    
+      const anime = await this.animeRepository.create({
+        ...createAnimeDto,
+        image: process.env.DATABASE_URL + file.path.replace("\\", "/")
+      })
       return this.animeRepository.save(anime);
     } catch (error) {
       console.log(error);
+      return error.response
     }
   }
 
@@ -40,11 +50,17 @@ export class AnimeService {
     }
   }
 
-  async update(id: number, updateAnimeDto: UpdateAnimeDto) {
+  async update(id: number, updateAnimeDto: UpdateAnimeDto, file: Express.Multer.File) {
     try {
-      return await this.animeRepository.update({id}, updateAnimeDto);
+      return await this.animeRepository.update({
+        id
+      }, {
+        ...updateAnimeDto,
+        image: process.env.DATABASE_URL + file.path.replace("\\", "/")
+      });
     } catch (error) {
       console.log(error);
+      return error.response
     }
   }
 

@@ -15,7 +15,9 @@ export class CreateAnimeDto {
 
     @ApiProperty()
     @IsNotEmpty()
-    @IsNumber()
-    year: number;
+    @IsString()
+    year: string;
 
+    @ApiProperty({type:"file"})
+    file: Express.Multer.File;
 }

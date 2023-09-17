@@ -23,7 +23,10 @@ export class Anime {
   lists: List[];
 
   @Column()
-  year: number;
+  year: string;
+
+  @Column()
+  image: string;
 
   @DeleteDateColumn()
   deleteAt: Date;

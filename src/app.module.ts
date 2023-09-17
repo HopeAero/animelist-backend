@@ -7,6 +7,7 @@ import { AnimeModule } from './anime/anime.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { ListModule } from './list/list.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
@@ -23,8 +24,11 @@ import { ListModule } from './list/list.module';
     AnimeModule,
     UsersModule,
     AuthModule,
+    MulterModule.register({
+      dest: './uploads',
+    }),
     ConfigModule.forRoot({
-      envFilePath: '.env.development' || '.env.production' || '.env.development.local || .env.template',
+      envFilePath: '.env.development' || '.env.production' || '.env.development.local',
     }),
     ListModule,
   ],

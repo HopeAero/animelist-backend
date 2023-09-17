@@ -20,6 +20,8 @@ export class UpdateAnimeDto extends PartialType(CreateAnimeDto) {
     @IsNotEmpty()
     @IsString()
     @IsOptional()
-    year: number;
+    year: string;
 
+    @ApiProperty({type:"file"})
+    file: Express.Multer.File;
 }

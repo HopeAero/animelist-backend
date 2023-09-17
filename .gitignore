@@ -6,7 +6,7 @@
 .env.development
 .env.production
 .env.development.local
-
+uploads/**
 # Logs
 logs
 *.log
