@@ -1,24 +1,30 @@
+import { List } from 'src/list/entities/list.entity';
 import {
-    Column,
-    DeleteDateColumn,
-    Entity,
-    PrimaryGeneratedColumn,
-  } from "typeorm";
+  Column,
+  DeleteDateColumn,
+  Entity,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Anime {
-    @PrimaryGeneratedColumn('increment')
-    id: number;
+  @PrimaryGeneratedColumn('increment')
+  id: number;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column()
-    description: string;
+  @Column()
+  description: string;
 
-    @Column()
-    year: number;
+  @ManyToMany(() => List, (list) => list.anime)
+  lists: List[];
 
-    @DeleteDateColumn()
-    deleteAt : Date;
+  @Column()
+  year: number;
+
+  @DeleteDateColumn()
+  deleteAt: Date;
 }

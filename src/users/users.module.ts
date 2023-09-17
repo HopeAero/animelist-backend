@@ -19,6 +19,6 @@ import { DbValidatorsModule } from '@youba/nestjs-dbvalidator';
   ],
   controllers: [UsersController],
   providers: [UsersService],
-  exports : [UsersService]
+  exports : [UsersService, TypeOrmModule]
 })
 export class UsersModule {}

@@ -29,6 +29,7 @@ async function bootstrap() {
     .addTag('users')
     .addTag('anime')
     .addTag('auth')
+    .addTag('list')
     .build();
 
   const document = SwaggerModule.createDocument(app, config); // Documentación

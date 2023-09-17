@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AnimeModule } from './anime/anime.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { ListModule } from './list/list.module';
 
 @Module({
   imports: [
@@ -23,8 +24,9 @@ import { ConfigModule } from '@nestjs/config';
     UsersModule,
     AuthModule,
     ConfigModule.forRoot({
-      envFilePath: '.env.development' || '.env.production' || '.env.development.local',
-    })
+      envFilePath: '.env.development' || '.env.production' || '.env.development.local || .env.template',
+    }),
+    ListModule,
   ],
   controllers: [AppController],
   providers: [AppService],
