@@ -2,14 +2,20 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { join } from 'path';
 import { json } from 'express';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
-  const PORT = process.env.PORT || 3000; 
-  const app = await NestFactory.create(AppModule, { // Creación de la app
-    cors: true,  // Cors
+  const PORT = process.env.PORT || 3000;
+
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, { cors: true }); // Cors para que se pueda acceder desde cualquier lado
+
+  app.useStaticAssets(join(__dirname, '..', 'uploads'), { // Ruta de las imagenes
+    prefix: '/uploads/',
   });
 
+  
   app.use(json({ limit: '500mb' })); // Tamaño máximo de los datos (60mb)
 
   app.setGlobalPrefix("api/v1");

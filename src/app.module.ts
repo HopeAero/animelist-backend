@@ -8,9 +8,12 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { ListModule } from './list/list.module';
 import { MulterModule } from '@nestjs/platform-express';
-
+import { ServeStaticModule } from '@nestjs/serve-static/dist/serve-static.module';
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      serveRoot: '/uploads/' //last slash was important
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
